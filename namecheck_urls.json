@@ -1,0 +1,630 @@
+{
+    "About.me": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://about.me/{username}"
+    },
+    "Ask FM": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://ask.fm/{username}"
+    },
+    "Bandcamp": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://bandcamp.com/{username}"
+    },
+    "Behance": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.behance.net/{username}"
+    },
+    "BitBucket": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://{username}.atlassian.net/people/"
+    },
+    "BuzzFeed": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.buzzfeed.com/{username}"
+    },
+    "CDAction": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://cdaction.pl/uzytkownicy/{username}"
+    },
+    "CashMe": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://cash.app/{username}"
+    },
+    "Chess.com": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.chess.com/member/{username}"
+    },
+    "Chomikuj": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://chomikuj.pl/{username}"
+    },
+    "CodeMentor": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.codementor.io/{username}"
+    },
+    "Codecademy": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "Profile Not Found",
+        "pattern_ok": "",
+        "url": "https://www.codecademy.com/profiles/{username}"
+    },
+    "Coderwall": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://coderwall.com/{username}"
+    },
+    "Contently": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://{username}.contently.com/"
+    },
+    "Crevado": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://{username}.crevado.com/"
+    },
+    "DailyMotion": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.dailymotion.com/{username}"
+    },
+    "Demotywatory": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "content=\"profile\"",
+        "url": "https://demotywatory.pl/user/{username}"
+    },
+    "Designspiration": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.designspiration.com/{username}"
+    },
+    "Disqus": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://disqus.com/{username}"
+    },
+    "Dribbble": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://dribbble.com/{username}"
+    },
+    "Ebay": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "content=\"Follow {username} on eBay",
+        "url": "https://www.ebay.com/usr/{username}"
+    },
+    "Ello": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://ello.co/{username}"
+    },
+    "Etsy": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.etsy.com/people/{username}"
+    },
+    "EyeEm": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.eyeem.com/{username}"
+    },
+    "Facebook": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://facebook.com/{username}"
+    },
+    "Filmweb": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "Varnish 404",
+        "pattern_ok": "",
+        "url": "https://www.filmweb.pl/user/{username}"
+    },
+    "Flickr": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.flickr.com/photos/{username}/"
+    },
+    "Flipboard": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://flipboard.com/@{username}"
+    },
+    "Fotka": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "\"id\":0,\"scaled\"",
+        "pattern_ok": "",
+        "url": "https://fotka.com/profil/{username}"
+    },
+    "GOG": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.gog.com/u/{username}"
+    },
+    "Github": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://github.com/{username}"
+    },
+    "Good Reads": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.goodreads.com/{username}"
+    },
+    "Gravatar": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://en.gravatar.com/{username}"
+    },
+    "Gumroad": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://gumroad.com/{username}"
+    },
+    "Hackernoon": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "href=\"https://hackernoon.com/u/{username}\"/>",
+        "url": "https://hackernoon.com/u/{username}"
+    },
+    "Houzz": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.houzz.com/{username}"
+    },
+    "HubPages": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://hubpages.com/@{username}"
+    },
+    "Imgur": {
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://imgur.com/{username}"
+    },
+    "Instructables": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.instructables.com/member/{username}/instructables/"
+    },
+    "Ising.pl": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://ising.pl/{username}"
+    },
+    "Jbzd": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://jbzd.com.pl/uzytkownik/{username}"
+    },
+    "Joemonster": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "<i class=\"title\">{username}</i>",
+        "pattern_ok": "",
+        "url": "https://joemonster.org/bojownik/{username}"
+    },
+    "Kaggle": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.kaggle.com/{username}"
+    },
+    "Keybase": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://keybase.io/{username}"
+    },
+    "Kongregate": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "Kongregate profile",
+        "url": "https://www.kongregate.com/accounts/{username}"
+    },
+    "Kwejk": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://kwejk.pl/uzytkownik/{username}#/tablica/"
+    },
+    "Lichess": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://lichess.org/@/{username}"
+    },
+    "Linktr": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://linktr.ee/{username}"
+    },
+    "LiveJournal": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://{username}.livejournal.com/"
+    },
+    "Medium": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://medium.com/@{username}/"
+    },
+    "Milanos": {
+        "allow_redirects": false,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://milanos.pl/profil-{username}.html"
+    },
+    "Mix": {
+        "allow_redirects": false,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://mix.com/{username}"
+    },
+    "MySpace": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://myspace.com/{username}"
+    },
+    "Newgrounds": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://{username}.newgrounds.com/"
+    },
+    "Pastebin": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://pastebin.com/u/{username}"
+    },
+    "Patreon": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.patreon.com/{username}"
+    },
+    "Pholder": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://pholder.com/u/{username}/"
+    },
+    "Photobucket": {
+        "allow_redirects": false,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://app.photobucket.com/u/{username}"
+    },
+    "Pinterest": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://pinterest.com/{username}"
+    },
+    "Quora": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.quora.com/{username}"
+    },
+    "Reddit": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "\"canonicalUrl\":null",
+        "pattern_ok": "",
+        "url": "https://www.reddit.com/user/{username}/"
+    },
+    "ReverbNation": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.reverbnation.com/{username}"
+    },
+    "Roblox": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "\"errorMessage\":\"User not found\"",
+        "pattern_ok": "",
+        "url": "https://api.roblox.com/users/get-by-username?username={username}"
+    },
+    "Scribd": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.scribd.com/{username}"
+    },
+    "Shopify": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.shopify.com/{username}"
+    },
+    "Signal": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://community.signalusers.org/u/{username}/"
+    },
+    "Slack": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://{username}workspace.slack.com/"
+    },
+    "Slideshare": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.slideshare.net/{username}"
+    },
+    "SoundCloud": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://soundcloud.com/{username}"
+    },
+    "Spotify": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "a user on Spotify",
+        "url": "https://open.spotify.com/user/{username}"
+    },
+    "Stackoverflow": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "/{username}\",\"profile_image\"",
+        "url": "https://api.stackexchange.com/2.3/users?order=desc&sort=reputation&inname={username}&site=stackoverflow"
+    },
+    "Steam": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "The specified profile could not be found.",
+        "pattern_ok": "",
+        "url": "https://steamcommunity.com/id/{username}"
+    },
+    "Streamlabs": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://streamlabs.com/{username}"
+    },
+    "Telegram": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "class=\"tgme_page_description\"",
+        "pattern_ok": "",
+        "url": "https://t.me/{username}"
+    },
+    "TikTok": {
+        "allow_redirects": true,
+        "custom_user_agent": true,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.tiktok.com/@{username}"
+    },
+    "Trakt": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://trakt.tv/users/{username}"
+    },
+    "Tripit": {
+        "allow_redirects": false,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.tripit.com/people/{username}"
+    },
+    "Tumblr": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://{username}.tumblr.com/"
+    },
+    "Twitch": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://m.twitch.tv/{username}"
+    },
+    "Venmo": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://venmo.com/{username}"
+    },
+    "Vimeo": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://vimeo.com/{username}"
+    },
+    "Vk": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://vk.com/{username}"
+    },
+    "Wikipedia": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://en.wikipedia.org/wiki/User:{username}"
+    },
+    "Wordpress": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "Do you want to register",
+        "pattern_ok": "",
+        "url": "https://{username}.wordpress.com/"
+    },
+    "Wykop": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.wykop.pl/ludzie/{username}/"
+    },
+    "Zbiornik": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "Profil - Mini Zbiornik",
+        "url": "https://mini.zbiornik.com/{username}"
+    },
+    "cda.pl": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.cda.pl/{username}"
+    },
+    "deviantART": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.deviantart.com/{username}"
+    },
+    "last.fm": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://www.last.fm/pl/user/{username}"
+    },
+    "pypi": {
+        "allow_redirects": true,
+        "custom_user_agent": false,
+        "pattern_nok": "",
+        "pattern_ok": "",
+        "url": "https://pypi.org/user/{username}/"
+    }
+}
