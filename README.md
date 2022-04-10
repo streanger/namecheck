@@ -18,6 +18,8 @@ python namecheck.py <username>
 
 # gui output
 python namecheck_gui.py <username>
+# to open url use mouse left button double click
+# or mouse middle button single click on chosen label 
 ```
 
 ## screenshots
