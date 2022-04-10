@@ -22,3 +22,8 @@ python namecheck_gui.py <username>
 
 ## screenshots
 
+![image](images/randomnick12.png)
+
+![image](images/john1234567890.png)
+
+![image](images/terminal.png)
