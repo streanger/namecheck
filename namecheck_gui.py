@@ -5,6 +5,7 @@ import random
 import webbrowser
 from tkinter import (
     Tk,
+    Entry,
     Frame,
     Widget,
     Label,
@@ -17,9 +18,11 @@ from tkinter import (
     LEFT,
     RIGHT,
     BOTH,
+    HORIZONTAL,
     X,
     Y,
 )
+from tkinter.ttk import Progressbar
 from pathlib import Path
 from termcolor import colored
 import namecheck  # my package
@@ -42,12 +45,23 @@ class NamecheckGUI(Frame):
         self.master.wm_title("namecheck")
         self.pack()
         self.run_gui()
-        
+
+    def entry_callback(self, event):
+        print(42)
+        self.master.focus()  # unfocus from entry
+        return None
+
     def run_gui(self):
         """create widgets & run gui"""
         # *********** title label ***********
         self.title_label = Label(self.master, text=self.title, fg="black", bg='white', relief="groove")
         self.title_label.pack(expand=NO, fill=BOTH, side=TOP)
+        self.username_entry = Entry(self.master, text='', relief="groove", justify="center",)
+        self.username_entry.bind("<Return>", self.entry_callback)
+        self.username_entry.pack(expand=NO, fill=BOTH, side=TOP)
+        self.prog_bar = Progressbar(self.master, orient=HORIZONTAL, length=100, mode='determinate', value=0)
+        self.prog_bar.pack(expand=NO, fill=BOTH, side=TOP)
+        self.prog_bar['value'] = 40
         
         # *********** main clickable labels ***********
         self.wrapper_frame = Frame(self.master)
@@ -133,12 +147,13 @@ if __name__ == "__main__":
     start_time = time.time()
     
     # *********** username ***********
-    args = sys.argv[1:]
-    if not args:
-        print('[*] usage:')
-        print(colored('    python namecheck_gui.py <username>', 'yellow'))
-        sys.exit()
-    username = args[0]
+    # args = sys.argv[1:]
+    # if not args:
+        # print('[*] usage:')
+        # print(colored('    python namecheck_gui.py <username>', 'yellow'))
+        # sys.exit()
+    # username = args[0]
+    username = 'john'
     print('[*] username: {}'.format(colored(username, 'yellow')))
     
     # *********** collect urls ***********
@@ -146,9 +161,15 @@ if __name__ == "__main__":
     # namecheck_urls = namecheck.filter_urls(namecheck_urls, ['Slack', 'Spotify'])
     
     # *********** main ***********
-    response_values = namecheck.run_main(namecheck_urls, username)
+    # response_values = namecheck.run_main(namecheck_urls, username)
+    response_values = [('ab'*random.randrange(1, 5), 'http://fake-{}-url.com'.format(x), random.choice((True, False))) for x in range(87)]
     # response_values = example_namecheck_response()
     print("\n[*] total time: {} [s]".format(round(time.time() - start_time, 4)))
     gui = NamecheckGUI(master=Tk(), title=username, data=response_values)
     gui.mainloop()
     
+"""
+todo:
+    -issue with: Can not load response cookies: Illegal key 'httponly,msToken'
+    
+"""
