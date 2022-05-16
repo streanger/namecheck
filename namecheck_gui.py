@@ -3,6 +3,7 @@ import os
 import time
 import random
 import webbrowser
+import threading
 from tkinter import (
     Tk,
     Entry,
@@ -22,7 +23,7 @@ from tkinter import (
     X,
     Y,
 )
-from tkinter.ttk import Progressbar
+# from tkinter.ttk import Progressbar  # TODO
 from pathlib import Path
 from termcolor import colored
 import namecheck  # my package
@@ -30,15 +31,19 @@ import namecheck  # my package
 
 class NamecheckGUI(Frame):
     """NamecheckGUI
-    title - username; displayed in top label
-    data - list of tuples in form -> (key, url, user_exist)
+    urls - list of urls to be checked
     items_in_row - number of labels in row
     """
-    def __init__(self, master, title, data, items_in_row=5):
+    def __init__(self, master, urls, items_in_row=5):
         super().__init__(master)
-        self.title = title
         self.items_in_row = items_in_row
+        self.urls = urls
+        self.labels_mapping = {}
+        data = list(urls.keys())
         self.wrapped_data = [data[n:n+self.items_in_row] for n in range(0, len(data), self.items_in_row)]
+        self.accounts_found = None
+        self.search_thread = None
+        self.thread_works = False
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.master.geometry("{}x{}".format(650, 500))  # width x height
         # self.master.resizable(width=True, height=True)
@@ -47,21 +52,71 @@ class NamecheckGUI(Frame):
         self.run_gui()
 
     def entry_callback(self, event):
-        print(42)
+        """entry widget event callback"""
+        if self.thread_works:
+            # print('[*] already works, wait for finish')  # DEBUG
+            return None
         self.master.focus()  # unfocus from entry
+        self.query = self.username_entry.get().strip()
+        if not self.query:
+            return None
+        # print(colored('[*] query: {}'.format(self.query)))  # DEBUG
+        self.clear_labels()
+        self.search_thread = threading.Thread(target=self.search_accounts)
+        self.search_thread.start()
+        self.thread_works = True
+        # disable entry before new run
+        self.username_entry.config(state= "disabled")  # disabled, readonly, normal
+        total_threads = threading.enumerate()
+        # print('[*] total_threads: {}'.format(total_threads))  # DEBUG
+        return None
+
+    def search_accounts(self):
+        """search for accounts using asyncio"""
+        # print(colored('[*] searching for accounts', 'cyan'))  # DEBUG
+        self.accounts_found = namecheck.run_main(self.urls, self.query)
+        # print(colored('[*] updating labels', 'cyan'))  # DEBUG
+        self.update_labels()
+        self.thread_works = False
+        self.username_entry.config(state="normal")
+        return None
+
+    def clear_labels(self):
+        """set white background for each"""
+        color = self.color_mapping('')
+        for link_label in self.labels_mapping.values():
+            link_label.config(bg=color)
+        return None
+
+    def update_labels(self):
+        for (key, url, value) in self.accounts_found:
+            link_label = self.labels_mapping[key]
+            color = self.color_mapping(value)
+            link_label.config(bg=color)
+
+            # unbind previous events
+            link_label.unbind("<Double-Button-1>")
+            link_label.unbind("<ButtonRelease-2>")
+            link_label.unbind("<Enter>")
+            link_label.unbind("<Leave>")
+
+            # bind new events
+            link_label.bind("<Double-Button-1>", lambda event, url=url: self.click_callback(url))
+            link_label.bind("<ButtonRelease-2>", lambda event, url=url: self.click_callback(url))
+            link_label.bind("<Enter>", lambda event, text=url: self.on_start_hover(text))
+            link_label.bind("<Leave>", lambda event: self.on_end_hover())
         return None
 
     def run_gui(self):
         """create widgets & run gui"""
         # *********** title label ***********
-        self.title_label = Label(self.master, text=self.title, fg="black", bg='white', relief="groove")
-        self.title_label.pack(expand=NO, fill=BOTH, side=TOP)
         self.username_entry = Entry(self.master, text='', relief="groove", justify="center",)
         self.username_entry.bind("<Return>", self.entry_callback)
         self.username_entry.pack(expand=NO, fill=BOTH, side=TOP)
-        self.prog_bar = Progressbar(self.master, orient=HORIZONTAL, length=100, mode='determinate', value=0)
-        self.prog_bar.pack(expand=NO, fill=BOTH, side=TOP)
-        self.prog_bar['value'] = 40
+        # TODO: progress bar
+        # self.prog_bar = Progressbar(self.master, orient=HORIZONTAL, length=100, mode='determinate', value=0)
+        # self.prog_bar.pack(expand=NO, fill=BOTH, side=TOP)
+        # self.prog_bar['value'] = 40
         
         # *********** main clickable labels ***********
         self.wrapper_frame = Frame(self.master)
@@ -69,8 +124,9 @@ class NamecheckGUI(Frame):
         for row_index, row in enumerate(self.wrapped_data):
             row_frame = Frame(self.wrapper_frame)
             row_frame.pack(expand=YES, fill=BOTH, side=TOP)
-            for col_index, (key, url, user_exist) in enumerate(row):
-                color = self.color_mapping(user_exist)
+            for col_index, (key) in enumerate(row):
+                url = ''  # at init
+                color = self.color_mapping('')  # white
                 # relief arguments: "flat", "raised", "sunken", "ridge", "solid", "groove"
                 link_label = Label(row_frame, text=key, fg="blue", bg=color, relief="groove", cursor="hand2")
                 link_label.pack(expand=YES, fill=BOTH, side=LEFT)
@@ -82,12 +138,14 @@ class NamecheckGUI(Frame):
                 <Double-Button-1>   -bind double mouse left button
                 <ButtonRelease-2>   -bind single mouse middle click & release
                 """
-                # link_label.bind("<Button-1>", lambda event, url=url: self.click_callback(url))
                 link_label.bind("<Double-Button-1>", lambda event, url=url: self.click_callback(url))
                 link_label.bind("<ButtonRelease-2>", lambda event, url=url: self.click_callback(url))
                 link_label.bind("<Enter>", lambda event, text=url: self.on_start_hover(text))
                 link_label.bind("<Leave>", lambda event: self.on_end_hover())
-                
+
+                # store reference to all labels
+                self.labels_mapping[key] = link_label
+
         # *********** label with destination url ***********
         self.info_label = Label(self.master, text='', fg="black", bg='white', relief="groove")
         self.info_label.pack(expand=NO, fill=BOTH, side=TOP)
@@ -134,42 +192,31 @@ class NamecheckGUI(Frame):
         self.master.quit()
         
         
-def example_namecheck_response():
-    """for debug"""
+def fake_namecheck_response():
+    """for debug purposes"""
     response_values = [('Website{}'.format(x), random.choice(['https://www.google.com', 'https://www.wykop.pl/']), random.choice([True, False, None])) for x in range(28)]
+    response_values = [('ab'*random.randrange(1, 5), 'http://fake-{}-url.com'.format(x), random.choice((True, False))) for x in range(87)]
+    urls = [url for url, _, _ in response_values]
     return response_values
-    
-    
+
+
 if __name__ == "__main__":
     # *********** setup ***********
     os.chdir(str(Path(sys.argv[0]).parent))
-    os.system('color')
-    start_time = time.time()
-    
-    # *********** username ***********
-    # args = sys.argv[1:]
-    # if not args:
-        # print('[*] usage:')
-        # print(colored('    python namecheck_gui.py <username>', 'yellow'))
-        # sys.exit()
-    # username = args[0]
-    username = 'john'
-    print('[*] username: {}'.format(colored(username, 'yellow')))
-    
+    if os.name == 'nt':
+        os.system('color')
+
     # *********** collect urls ***********
     namecheck_urls = namecheck.read_json('namecheck_urls.json')
     # namecheck_urls = namecheck.filter_urls(namecheck_urls, ['Slack', 'Spotify'])
     
     # *********** main ***********
-    # response_values = namecheck.run_main(namecheck_urls, username)
-    response_values = [('ab'*random.randrange(1, 5), 'http://fake-{}-url.com'.format(x), random.choice((True, False))) for x in range(87)]
-    # response_values = example_namecheck_response()
-    print("\n[*] total time: {} [s]".format(round(time.time() - start_time, 4)))
-    gui = NamecheckGUI(master=Tk(), title=username, data=response_values)
+    gui = NamecheckGUI(master=Tk(), urls=namecheck_urls)
     gui.mainloop()
     
 """
 todo:
     -issue with: Can not load response cookies: Illegal key 'httponly,msToken'
-    
+    https://stackoverflow.com/questions/47895765/use-asyncio-and-tkinter-or-another-gui-lib-together-without-freezing-the-gui
+
 """
