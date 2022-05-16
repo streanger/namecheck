@@ -112,8 +112,13 @@ def run_main(namecheck_urls: dict, username: str):
     """
     fix for <RuntimeError: Event loop is closed> error:
         https://stackoverflow.com/questions/45600579/asyncio-event-loop-is-closed-when-getting-loop
+    https://stackoverflow.com/questions/48604341/what-is-event-loop-policy-and-why-is-it-needed-in-python-asyncio
+    help(asyncio.get_event_loop_policy())
     """
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    if os.name == 'nt':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    else:
+        asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
     response_values = asyncio.run(main(namecheck_urls, username))
     return response_values
     
@@ -121,7 +126,8 @@ def run_main(namecheck_urls: dict, username: str):
 if __name__ == "__main__":
     # *********** setup ***********
     os.chdir(str(Path(sys.argv[0]).parent))
-    os.system('color')
+    if os.name == 'nt':
+        os.system('color')
     start_time = time.time()
     
     # *********** username ***********
