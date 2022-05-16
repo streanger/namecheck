@@ -4,6 +4,12 @@ module for checking if user exist
 
 ## install
 ```cmd
+python -m venv venv
+# on windows
+.\venv\Scripts\Activate.ps1
+# on linux
+source venv/bin/activate
+
 git clone https://github.com/streanger/namecheck.git
 cd namecheck
 pip install -r requirements.txt
