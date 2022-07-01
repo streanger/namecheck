@@ -17,6 +17,12 @@ pip install -r requirements.txt
 pip install aiohttp requests termcolor pyperclip
 ```
 
+If running on linux type this command for clipboard feature
+
+```
+sudo apt-get install xclip
+```
+
 ## usage 
 ```cmd
 # terminal output
