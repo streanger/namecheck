@@ -19,15 +19,15 @@ def read_json(filename):
     except FileNotFoundError:
         pass
     return data
-    
-    
+
+
 def bool_to_color(flag: bool):
     """return color refered to flag"""
     if flag:
-        return 'cyan'
-    return 'red'
-    
-    
+        return "cyan"
+    return "red"
+
+
 def user_exist_status(response_status, response_text, pattern_ok, pattern_nok):
     """
     asyncio:
@@ -45,69 +45,89 @@ def user_exist_status(response_status, response_text, pattern_ok, pattern_nok):
         else:
             user_exist = True
     else:
-        if (response_status == 200):
+        if response_status == 200:
             user_exist = True
         else:
             user_exist = False
     return user_exist
-    
-    
-async def request_user_exist(session, key, url, pattern_ok, pattern_nok, allow_redirects, custom_user_agent):
+
+
+async def request_user_exist(
+    session, key, url, pattern_ok, pattern_nok, allow_redirects, custom_user_agent
+):
     """make asyncio request"""
     try:
         if custom_user_agent:
-            user_agent = 'Mozilla/5.0 (Linux; Android 9; SM-A305GT) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.58 Mobile Safari/537.36'
+            user_agent = "Mozilla/5.0 (Linux; Android 9; SM-A305GT) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.58 Mobile Safari/537.36"
             headers = {"User-Agent": user_agent}
         else:
             headers = None
-        async with session.get(url, headers=headers, allow_redirects=allow_redirects, timeout=10) as response:
+        async with session.get(
+            url, headers=headers, allow_redirects=allow_redirects, timeout=10
+        ) as response:
             response_status = response.status
             if pattern_ok or pattern_nok:
                 response_text = await response.text()
             else:
-                response_text = ''
-            user_exist = user_exist_status(response_status, response_text, pattern_ok, pattern_nok)
+                response_text = ""
+            user_exist = user_exist_status(
+                response_status, response_text, pattern_ok, pattern_nok
+            )
             # print(colored('[*] done for url: {}'.format(url), 'green') + colored(' (allow_redirects={})'.format(allow_redirects), bool_to_color(allow_redirects)))
             return (key, url, user_exist)
-            
+
     except UnicodeDecodeError as err:
         # print(colored('[x] error catched: {}'.format(err), 'red'))
         return (key, url, None)
-        
+
     except aiohttp.client_exceptions.ClientConnectorCertificateError as err:
         # print(colored('[x] error catched: {}'.format(err), 'red'))
         return (key, url, None)
-        
+
     except aiohttp.client_exceptions.ClientConnectorError as err:
         # print(colored('[x] error catched: {}'.format(err), 'red'))
         return (key, url, None)
-        
+
     except asyncio.exceptions.TimeoutError as err:
         # print(colored('[x] error catched: {}'.format(err), 'red'))
         return (key, url, None)
-        
-        
+
+
 async def main(namecheck_urls, username):
     """create ascyncio tasks"""
     async with aiohttp.ClientSession() as session:
         tasks = []
         for index, (key, item) in enumerate(namecheck_urls.items()):
-            url_encoded_username = urllib.parse.quote(username.encode('utf8'))
-            url = item['url'].format(username=url_encoded_username)
-            pattern_ok = item['pattern_ok'].format(username=username)
-            pattern_nok = item['pattern_nok'].format(username=username)
-            allow_redirects = item.get('allow_redirects', True)
-            custom_user_agent = item.get('custom_user_agent', False)
-            tasks.append(asyncio.ensure_future(request_user_exist(session, key, url, pattern_ok, pattern_nok, allow_redirects, custom_user_agent)))
+            url_encoded_username = urllib.parse.quote(username.encode("utf8"))
+            url = item["url"].format(username=url_encoded_username)
+            pattern_ok = item["pattern_ok"].format(username=username)
+            pattern_nok = item["pattern_nok"].format(username=username)
+            allow_redirects = item.get("allow_redirects", True)
+            custom_user_agent = item.get("custom_user_agent", False)
+            tasks.append(
+                asyncio.ensure_future(
+                    request_user_exist(
+                        session,
+                        key,
+                        url,
+                        pattern_ok,
+                        pattern_nok,
+                        allow_redirects,
+                        custom_user_agent,
+                    )
+                )
+            )
         return await asyncio.gather(*tasks)
-        
-        
+
+
 def filter_urls(namecheck_urls: dict, to_filter: list):
     """to_filter: list or tuple of urls"""
-    namecheck_urls = {key:value for key, value in namecheck_urls.items() if key in to_filter}
+    namecheck_urls = {
+        key: value for key, value in namecheck_urls.items() if key in to_filter
+    }
     return namecheck_urls
-    
-    
+
+
 def run_main(namecheck_urls: dict, username: str):
     """
     fix for <RuntimeError: Event loop is closed> error:
@@ -115,48 +135,48 @@ def run_main(namecheck_urls: dict, username: str):
     https://stackoverflow.com/questions/48604341/what-is-event-loop-policy-and-why-is-it-needed-in-python-asyncio
     help(asyncio.get_event_loop_policy())
     """
-    if os.name == 'nt':
+    if os.name == "nt":
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     else:
         asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
     response_values = asyncio.run(main(namecheck_urls, username))
     return response_values
-    
-    
+
+
 if __name__ == "__main__":
     # *********** setup ***********
     os.chdir(str(Path(sys.argv[0]).parent))
-    if os.name == 'nt':
-        os.system('color')
+    if os.name == "nt":
+        os.system("color")
     start_time = time.time()
-    
+
     # *********** username ***********
     args = sys.argv[1:]
     if not args:
-        print('[*] usage:')
-        print(colored('    python namecheck.py <username>', 'yellow'))
+        print("[*] usage:")
+        print(colored("    python namecheck.py <username>", "yellow"))
         sys.exit()
     username = args[0]
-    print('[*] username: {}'.format(colored(username, 'yellow')))
-    
+    print("[*] username: {}".format(colored(username, "yellow")))
+
     # *********** collect urls ***********
-    namecheck_urls = read_json('namecheck_urls.json')
+    namecheck_urls = read_json("namecheck_urls.json")
     # namecheck_urls = filter_urls(namecheck_urls, ['Hackernoon'])
-    
+
     # *********** main ***********
     response_values = run_main(namecheck_urls, username)
-    print('\n------------------------------------------------------------')
+    print("\n------------------------------------------------------------")
     for index, (key, url, user_exist) in enumerate(response_values):
         if user_exist is None:
-            color = 'red'  # error
+            color = "red"  # error
         elif user_exist:
-            color = 'green'
+            color = "green"
         else:
-            color = 'yellow'
-        print(colored('{:02}) {}'.format(index+1, (key, url, user_exist)), color))
+            color = "yellow"
+        print(colored("{:02}) {}".format(index + 1, (key, url, user_exist)), color))
     print("\n[*] total time: {} [s]".format(round(time.time() - start_time, 4)))
-    
-    
+
+
 """
 useful:
     https://www.twilio.com/blog/asynchronous-http-requests-in-python-with-aiohttp
