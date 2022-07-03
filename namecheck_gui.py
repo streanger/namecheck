@@ -268,6 +268,7 @@ def fake_namecheck_response():
 
 if __name__ == "__main__":
     # *********** setup ***********
+    os.chdir(str(Path(sys.argv[0]).parent))
     if os.name == "nt":
         os.system("color")
 
