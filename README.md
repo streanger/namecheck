@@ -27,11 +27,12 @@ sudo apt-get install xclip
 ```cmd
 # terminal output
 python namecheck.py <username>
+python namecheck.py <username> --csv
 ```
 
 ```
 # gui output
-python namecheck_gui.py <username>
+python namecheck_gui.py
 ```
 - to open url use mouse left button double click
 - or mouse middle button single click on chosen label
@@ -43,4 +44,4 @@ python namecheck_gui.py <username>
 
 ![image](images/john1234567890.png)
 
-![image](images/terminal.png)
+![image](images/namecheck-cli.png)

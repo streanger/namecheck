@@ -1,12 +1,15 @@
-import sys
-import os
-import json
-import aiohttp
 import asyncio
+import csv
+import io
+import json
+import os
+import sys
 import time
-import requests
 import urllib.parse
 from pathlib import Path
+
+import aiohttp
+import requests
 from termcolor import colored
 
 
@@ -144,72 +147,52 @@ def run_main(namecheck_urls: dict, username: str):
 
 
 if __name__ == "__main__":
-    # *********** setup ***********
+    # ****** setup ******
     os.chdir(str(Path(sys.argv[0]).parent))
     if os.name == "nt":
         os.system("color")
     start_time = time.time()
 
-    # *********** username ***********
+    # ****** args ******
     args = sys.argv[1:]
     if not args:
         print("[*] usage:")
-        print(colored("    python namecheck.py <username>", "yellow"))
+        print(colored("    python namecheck.py <username>", "cyan"))
+        print(colored('        --csv    -output in csv format', "cyan"))
         sys.exit()
+    if '--csv' in args:
+        csv_mode = True
+    else:
+        csv_mode = False
     username = args[0]
-    print("[*] username: {}".format(colored(username, "yellow")))
+    if not csv_mode:
+        print("[*] username: {}".format(colored(username, "cyan")))
 
-    # *********** collect urls ***********
+    # ****** collect urls & run main ******
     namecheck_urls = read_json("namecheck_urls.json")
-    # namecheck_urls = filter_urls(namecheck_urls, ['Hackernoon'])
-
-    # *********** main ***********
     response_values = run_main(namecheck_urls, username)
-    print("\n------------------------------------------------------------")
-    for index, (key, url, user_exist) in enumerate(response_values):
-        if user_exist is None:
-            color = "red"  # error
-        elif user_exist:
-            color = "green"
-        else:
-            color = "yellow"
-        print(colored("{:02}) {}".format(index + 1, (key, url, user_exist)), color))
-    print("\n[*] total time: {} [s]".format(round(time.time() - start_time, 4)))
 
-
-"""
-useful:
-    https://www.twilio.com/blog/asynchronous-http-requests-in-python-with-aiohttp
-    https://stackoverflow.com/questions/32456881/getting-values-from-functions-that-run-as-asyncio-tasks
-    https://docs.python.org/3/library/asyncio-task.html
-    https://bbc.github.io/cloudfit-public-docs/asyncio/asyncio-part-2.html
-    https://docs.aiohttp.org/en/stable/client_reference.html
-    https://docs.aiohttp.org/en/v0.20.0/client.html
-    
-info/todo:
-    -item should only contain pattern_ok or pattern_nok, not both of them
-    -todo: check out if ascyncio request is with or without redirects - we can set parameter
-    -todo: add allow_redirects parameter - done
-    -default requests user_agent: requests.utils.default_headers() 
-    -TikTok warning, while using custom user-agent: Can not load response cookies: Illegal key 'httponly,msToken'
-    -https://user-agents.net/
-    -import webbrowser; webbrowser.open(url)
-    -data visualization possibilites:
-        -tkinter gui
-        -html file & browser view
-        -jupyter -> qgrid
-        -plotly -> table
-    -todo: make some options
-    -todo: get supported domains - get from json
-    -todo: set domains - pass as argument to check function
-    
-errors:
-    ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'XXXXXXX_XXXXXXX.contently.com'. (_ssl.c:1129)
-    aiohttp.client_exceptions.ClientConnectorCertificateError: Cannot connect to host XXXXXXX_XXXXXXX.contently.com:443 ssl:True [SSLCertVerificationError: (1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'XXXXXXX_XXXXXXX.contently.com'. (_ssl.c:1129)")]
-    https://stackoverflow.com/questions/63347818/aiohttp-client-exceptions-clientconnectorerror-cannot-connect-to-host-stackover
-    
-    aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host blip.fm:443 ssl:default [The semaphore timeout period has expired]
-    
-    [x] error catched: Cannot connect to host XXXXXXX_XXXXXXX.tumblr.com:443 ssl:True [SSLCertVerificationError: (1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'XXXXXXX_XXXXXXX.tumblr.com'. (_ssl.c:1129)")]
-    occurs when url contains uderscore (_)
-"""
+    # ****** print output ******
+    if csv_mode:
+        rows = [[index+1, row[1], row[0], row[2]] for index, row in enumerate(response_values)]
+        output = io.StringIO()
+        writer = csv.writer(output)
+        for row in rows:
+            writer.writerow(row)
+        csv_str = output.getvalue()
+        print(csv_str)
+    else:
+        print()
+        for index, (key, url, user_exist) in enumerate(response_values):
+            if user_exist is None:
+                color = "red"  # error
+                result = 'Failed to check'
+            elif user_exist:
+                color = "green"
+                result = 'User exists'
+            else:
+                color = "yellow"
+                result = 'User not found'
+            # print(colored("{:02}) {}".format(index + 1, (key, url, user_exist)), color))
+            print(colored("{:02}) {} ({}) -> {}".format(index+1, url, key, result), color))
+        print(colored("\n[*] total time: {:.2f} [s]".format(time.time() - start_time), 'cyan'))
