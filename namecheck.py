@@ -9,7 +9,6 @@ import urllib.parse
 from pathlib import Path
 
 import aiohttp
-import requests
 from termcolor import colored
 
 
@@ -56,12 +55,12 @@ def user_exist_status(response_status, response_text, pattern_ok, pattern_nok):
 
 
 async def request_user_exist(
-    session, key, url, pattern_ok, pattern_nok, allow_redirects, custom_user_agent
+    *, session, key, url, pattern_ok, pattern_nok, allow_redirects, custom_user_agent
 ):
     """make asyncio request"""
     try:
         if custom_user_agent:
-            user_agent = "Mozilla/5.0 (Linux; Android 9; SM-A305GT) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.58 Mobile Safari/537.36"
+            user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
             headers = {"User-Agent": user_agent}
         else:
             headers = None
@@ -110,13 +109,13 @@ async def main(namecheck_urls, username):
             tasks.append(
                 asyncio.ensure_future(
                     request_user_exist(
-                        session,
-                        key,
-                        url,
-                        pattern_ok,
-                        pattern_nok,
-                        allow_redirects,
-                        custom_user_agent,
+                        session=session,
+                        key=key,
+                        url=url,
+                        pattern_ok=pattern_ok,
+                        pattern_nok=pattern_nok,
+                        allow_redirects=allow_redirects,
+                        custom_user_agent=custom_user_agent,
                     )
                 )
             )
